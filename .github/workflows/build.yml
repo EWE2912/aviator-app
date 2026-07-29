@@ -24,17 +24,17 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Instalar Dependências e Buildozer
+    - name: Instalar Dependências do Sistema e Buildozer
       run: |
         export DEBIAN_FRONTEND=noninteractive
         sudo apt-get update -y
-        sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
-        python3 -m pip install --upgrade pip
-        pip install --upgrade buildozer cython
+        sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev build-essential libsqlite3-dev
+        python3 -m pip install --upgrade pip setuptools
+        pip install --upgrade "buildozer>=1.5.0" "cython<3.0.0"
 
-    - name: Compilar APK
+    - name: Compilar APK com Buildozer
       run: |
-        yes | buildozer -v android debug
+        buildozer -v android debug
 
     - name: Disponibilizar o APK para Download
       uses: actions/upload-artifact@v4
