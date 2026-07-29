@@ -3,34 +3,31 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ main, principal ]
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout do código
+      uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Configurar JDK 17
+      uses: actions/setup-java@v4
       with:
-        python-version: '3.10'
+        distribution: 'temurin'
+        java-version: '17'
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential git ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev openjdk-17-jdk
-
-    - name: Build with Buildozer
-      uses: ArtemShedov/buildozer-action@v1.2.2
+    - name: Compilar APK com Buildozer
+      uses: ArtemShtepenko/buildozer-action@v1.2
       with:
-        command: buildozer -s android debug
-        subfolder: .
+        command: buildozer -v android debug
+        repository_root: .
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
+    - name: Disponibilizar o APK para Download
+      uses: actions/upload-artifact@v4
       with:
-        name: app-release
+        name: aviator-app-apk
         path: bin/*.apk
