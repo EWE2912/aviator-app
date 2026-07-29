@@ -1,3 +1,4 @@
+
 [app]
 
 # (str) Title of your application
@@ -12,7 +13,7 @@ package.domain = org.aviator
 # (str) Source directory where the main.py file is located
 source.dir = .
 
-# (list) Source files to include (let it empty to include all files)
+# (list) Source files to include
 source.include_exts = py,png,jpg,kv,atlas
 
 # (str) Version of the application
@@ -28,19 +29,31 @@ orientation = portrait
 # Android specific
 #
 
-# (int) Target Android API, should be as high as possible.
+# (bool) Indicate if the application should be fullscreen or not
+fullscreen = 0
+
+# (int) Target Android API
 android.api = 33
 
-# (int) Minimum API your APK will support.
-android.minapi = 24
+# (int) Minimum API your APK will support
+android.minapi = 21
+
+# (str) Android NDK version
+android.ndk = 25b
+
+# (bool) Accept SDK license automatically
+android.accept_sdk_license = True
 
 # (list) Permissions
 android.permissions = INTERNET
 
-# (list) archs
+# (list) Architectures to build for
 android.archs = arm64-v8a
 
 [buildozer]
 
-# (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
+# (int) Log level (0 = error only, 1 = info, 2 = debug)
 log_level = 2
+
+# (int) Display warning if buildozer is run as root
+warn_on_root = 1
